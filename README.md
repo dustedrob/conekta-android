@@ -24,47 +24,17 @@ API LEVEL Up 8
 	</application>
 	
 	
-	
-## Usage Sync
-
-#### 1. `Simple Charge`
-
-``` java
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	BigInteger monto = new BigInteger("20000");
-	Address address = new Address("250 Alexis St", "Red Deer", "Alberta", "Canada", "T4N 0B8");
-	Card card = new Card(tarjeta, 12, 2015, "Thomas Logan", 666);
-	card.setAddress(address);
-	ChargeCard cargoCard = new ChargeCard(card, "Pay from android", monto, Currency.MXN);
-	cargoCard.setReferenceId("9893-cohib_s1_wolf_pack");
-	Conekta.chargeSync(this, cargoCard);
-```        
-#### 2. `OXXO Charge`
-``` java
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	BigInteger monto = new BigInteger("20000");
-	Cash cash = new Cash(CashType.OXXO);
-	ChargeCash cargoCash = new ChargeCash(cash, "Pago desde android", monto, Currency.MXN);
-	Conekta.chargeSync(this, cargoCash);
-```         
-#### 3. `Bank Charge`
-``` java
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	BigInteger monto = new BigInteger("20000");
-	Bank bank = new Bank(BankType.BANORTE);
-	ChargeBank chargeBank = new ChargeBank(bank, "Pago desde android", monto, Currency.MXN);
-	Conekta.chargeSync(this, chargeBank);
-```
-## Usage Async
+## Usage Async (Recommended)
 #### 1. `Simple Charge`
 ``` java
 	Address address = new Address("250 Alexis St", "Red Deer", "Alberta", "Canada", "T4N 0B8");
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	Card card = new Card(tarjeta, 12, 2015, "Thomas Logan", 666);
+	BigInteger numberCard = new BigInteger("4111111111111111");
+	Card card = new Card(numberCard, 12, 2015, "Thomas Logan", 666);
 	card.setAddress(address);
-	ChargeCard cargoCard = new ChargeCard(card, "Pay from android", monto, Currency.MXN);
-	cargoCard.setReferenceId("9893-cohib_s1_wolf_pack");
-	Conekta.chargeAsync(this, cargoCard, new JsonHttpResponseHandler() {
+	BigInteger amount = new BigInteger("20000");
+	ChargeCard chargeCard = new ChargeCard(card, "Charge from android", amount, Currency.MXN);
+	chargeCard.setReferenceId("9893-cohib_s1_wolf_pack");
+	Conekta.chargeAsync(this, chargeCard, new JsonHttpResponseHandler() {
 	
 		@Override
 		public void onSuccess(JSONObject jsono) {}
@@ -76,11 +46,13 @@ API LEVEL Up 8
         
 #### 2. `OXXO Charge`
 ``` java
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	BigInteger monto = new BigInteger("20000");
+	BigInteger amount = new BigInteger("20000");
 	Cash cash = new Cash(CashType.OXXO);
-	ChargeCash cargoCash = new ChargeCash(cash, "Pago desde android", monto, Currency.MXN);
-	Conekta.chargeAsync(this, cargoCash, new JsonHttpResponseHandler() {
+	ChargeCash chargeCash = new ChargeCash(cash, "Charge from android", amount, Currency.MXN);
+	chargeCash.setReferenceId("9893-cohib_s1_wolf_pack");
+	Details details = new Details("Wolverine", "403-342-0642", "logan@x-men.org");
+	chargeCash.setDetails(details);
+	Conekta.chargeAsync(this, chargeCash, new JsonHttpResponseHandler() {
 	
 		@Override
 		public void onSuccess(JSONObject jsono) {}
@@ -91,10 +63,12 @@ API LEVEL Up 8
 ```        
 #### 3. `Bank Charge`
 ``` java
-	BigInteger tarjeta = new BigInteger("4111111111111111");
-	BigInteger monto = new BigInteger("20000");
 	Bank bank = new Bank(BankType.BANORTE);
-	ChargeBank chargeBank = new ChargeBank(bank, "Pago desde android", monto, Currency.MXN);
+	BigInteger amount = new BigInteger("20000");
+	ChargeBank chargeBank = new ChargeBank(bank, "Charge from android", amount, Currency.MXN);
+	chargeBank.setReferenceId("9893-cohib_s1_wolf_pack");
+	Details details = new Details("Wolverine", "403-342-0642", "logan@x-men.org");
+	chargeBank.setDetails(details);
 	Conekta.chargeAsync(this, chargeBank, new JsonHttpResponseHandler() {
 	
 		@Override
@@ -104,6 +78,42 @@ API LEVEL Up 8
 		public void onFailure(Throwable thrwbl, JSONObject jsono) {}
 	});
 ```
+	
+## Usage Sync
+
+#### 1. `Simple Charge`
+
+``` java
+	Address address = new Address("250 Alexis St", "Red Deer", "Alberta", "Canada", "T4N 0B8");
+	BigInteger numberCard = new BigInteger("4111111111111111");
+	Card card = new Card(numberCard, 12, 2015, "Thomas Logan", 666);
+	card.setAddress(address);
+	BigInteger amount = new BigInteger("20000");
+	final ChargeCard chargeCard = new ChargeCard(card, "Charge from android", amount, Currency.MXN);
+	chargeCard.setReferenceId("9893-cohib_s1_wolf_pack");
+	Conekta.chargeSync(this, chargeCard);
+```        
+#### 2. `OXXO Charge`
+``` java
+	BigInteger amount = new BigInteger("20000");
+	Cash cash = new Cash(CashType.OXXO);
+	final ChargeCash chargeCash = new ChargeCash(cash, "Charge from android", amount, Currency.MXN);
+	chargeCash.setReferenceId("9893-cohib_s1_wolf_pack");
+	Details details = new Details("Wolverine", "403-342-0642", "logan@x-men.org");
+	chargeCash.setDetails(details);
+	Conekta.chargeSync(this, chargeCash);
+```         
+#### 3. `Bank Charge`
+``` java
+	Bank bank = new Bank(BankType.BANORTE);
+	BigInteger amount = new BigInteger("20000");
+	ChargeBank chargeBank = new ChargeBank(bank, "Charge from android", amount, Currency.MXN);
+	chargeBank.setReferenceId("9893-cohib_s1_wolf_pack");
+	Details details = new Details("Wolverine", "403-342-0642", "logan@x-men.org");
+	chargeBank.setDetails(details);
+	Conekta.chargeSync(this, chargeBank);
+```
+
         
         
         
