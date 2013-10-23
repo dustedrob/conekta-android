@@ -1,7 +1,15 @@
 Conekta Android
 ===============
 
-Android Library for conekta.mx
+Conekta SDK for Android is a simple resource for make calls to conekta.
+
+This is a library project which makes the life much easier by coding less code for you can do requests for the transactions to credit card, bank and oxxo.
+
+Sample app: 
+<a href="https://play.google.com/store/apps/details?id=mx.yellowme.sample">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_45.png" />
+</a>
 
 API LEVEL Up 8
 
